@@ -7,8 +7,9 @@
     "\\app_server\\views",
     "\\app_server\\views\\layouts",
     "\\app_server\\views\\partials",
+    "\\data",
     "\\public"
   ],
-  "SelectedNode": "\\app_server\\routes\\travel.js",
+  "SelectedNode": "\\app_server\\views\\index.html",
   "PreviewInSolutionExplorer": false
 }

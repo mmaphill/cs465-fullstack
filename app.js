@@ -4,16 +4,29 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// define routers
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var aboutRouter = require('./app_server/routes/about');
 var travelRouter = require('./app_server/routes/travel');
+var contactRouter = require('./app_server/routes/contact');
+var mealsRouter = require('./app_server/routes/meals');
+var newsRouter = require('./app_server/routes/news');
+var apiRouter = require('./app_api/routes/index');
+
+// define handlebars 
 var handlebars = require('hbs');
+
+// bring in the database
+require('./app_api/models/db');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
+
+// register handlebars helper (https://www.npmjs.com/package/hbs)
+handlebars.registerHelper('eq', (a, b) => a === b);
 
 // register handlbars partials (https://www.npmjs.com/package/hbs)
 handlebars.registerPartials(__dirname + '/app_server/views/partials');
@@ -26,10 +39,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// wire-up routes to controllers
+app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 app.use('/about', aboutRouter);
 app.use('/travel', travelRouter);
+app.use('/contact', contactRouter);
+app.use('/meals', mealsRouter);
+app.use('/news', newsRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

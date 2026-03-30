@@ -1,2 +1,65 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Travlr Getaways Website Template</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+    <div id="background">
+        <div id="page">
+            {{> header }}
+            <div id="contents">
+                <div id="adbox">
+                    <img src="images/sea-sound.jpg" alt="Img">
+                    {{{ title }}}
+                    {{{ description }}}
+                </div>
+                <div id="main">
+                    <div class="box">
+                        <div>
+                            <div>
+                                {{{ subtitle }}} 
+                                <div class="blogs">
+                                    {{#each blogs }}
+                                    <ul>
+                                        <li>
+                                            {{{ this.title }}}
+                                            {{{ this.date }}}
+                                            {{{ this.description }}}
+                                        </li>
+                                    </ul>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="testimonials" class="box">
+                        <div>
+                            <div>
+                                {{#each testimonials}}
+                                    {{{ this.title }}}
+                                    {{{ this.description }}}
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="sidebar">
+                    <div class="section">
+                        <a href="rooms.html"><img src="images/rooms.png" alt="Img"></a>
+                    </div>
+                    <div class="section">
+                        <a href="dives.html"><img src="images/dive-site.png" alt="Img"></a>
+                    </div>
+                    <div class="section">
+                        <a href="foods.html"><img src="images/food.png" alt="Img"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> footer }}
+    </div>
+</body>
+</html>

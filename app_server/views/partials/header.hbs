@@ -4,26 +4,26 @@
     </div>
     <div id="navigation">
         <ul>
-            <li>
+            <li class="{{#if (eq currentPage 'index')}} selected{{/if}}">
                 <a href="/index">Home</a>
             </li>
-            <li class="selected">
+            <li class="{{#if (eq currentPage 'travel')}} selected{{/if}}">
                 <a href="/travel">Travel</a>
             </li>
-            <li>
+            <li class="{{#if (eq currentPage 'rooms')}} selected{{/if}}">
                 <a href="rooms.html">Rooms</a>
             </li>
-            <li>
-                <a href="meals.html">Meals</a>
+            <li class="{{#if (eq currentPage 'meals')}} selected{{/if}}">
+                <a href="meals">Meals</a>
             </li>
-            <li>
-                <a href="news.html">News</a>
+            <li class="{{#if (eq currentPage 'news')}} selected{{/if}}">
+                <a href="news">News</a>
             </li>
-            <li>
+            <li class="{{#if (eq currentPage 'about')}} selected{{/if}}"> 
                 <a href="/about">About</a>
             </li>
-            <li>
-                <a href="contact.html">Contact</a>
+            <li class="{{#if (eq currentPage 'contact')}} selected{{/if}}">
+                <a href="/contact">Contact</a>
             </li>
         </ul>
     </div>

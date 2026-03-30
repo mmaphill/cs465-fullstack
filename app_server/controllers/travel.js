@@ -23,11 +23,34 @@ const travel = async function (req, res, next) {
 				message = "No trips exist in our database!";
 			}
 		}
-		res.render('travel', { title: 'Travlr Getaways', trips, currentPage: 'travel' });
+		res.render('travel', { title: 'Travlr Getaways', trips: json, currentPage: 'travel' });
 		})
 		.catch((err) => res.status(500).send(err.message));
 };
 
+// GET travel detail
+const travelDetail = async function (req, res, next) {
+	const tripCode = req.params.tripCode;
+	const endpoit = `${tripsEndpoint}/${tripCode}`;
+
+	await fetch(endpoint, options)
+	.then((res) => res.json())
+	.then((json) => {
+		let message = null;
+		if(!(json instanceof Array)) {
+			message = "API lookup error";
+			json = [];
+		} else {
+			if (!json.length) {
+				message = "No trips exist in our database!";
+			}
+		}
+		res.render('travelDetail', { title: 'Trip Details', trips: json, message, currentPage: 'travel' });
+	}).catch((err) => res.status(500).send(err.message));
+
+};
+
 module.exports = {
-	travel
+	travel,
+	travelDetail
 };

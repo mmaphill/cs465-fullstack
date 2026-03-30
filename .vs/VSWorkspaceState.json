@@ -2,15 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\app_api",
-    "\\app_api\\controllers",
-    "\\app_api\\routes",
+    "\\app_api\\models",
     "\\app_server",
     "\\app_server\\controllers",
     "\\app_server\\routes",
     "\\app_server\\views",
+    "\\app_server\\views\\partials",
     "\\data",
     "\\public"
   ],
-  "SelectedNode": "\\app_server\\views\\travel.hbs",
+  "SelectedNode": "\\app_server\\controllers\\travel.js",
   "PreviewInSolutionExplorer": false
 }

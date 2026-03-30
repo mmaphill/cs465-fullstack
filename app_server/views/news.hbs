@@ -16,27 +16,27 @@
                         <div id="news" class="body">
                             <div class="sidebar">
                                 {{#each latest }}
-                                {{{ subtitle }}}
+                                {{{this.subtitle }}}
                                 <ul>
                                     <li>
-                                        {{{ item }}}
+                                        {{{this.item }}}
                                     </li>
                                 </ul>
                                 {{/each}}
                                 {{#each tips }}
-                                {{{ subtitle }}}
+                                {{{this.subtitle }}}
                                 <ul>
                                     <li>
-                                        {{{ item }}}
+                                        {{{this.item }}}
                                     </li>
                                 </ul>
                                 {{/each}}
                             </div>
                             <div>
-                                {{{ title }}}
-                                {{{ image }}}
-                                {{{ subtitle }}}
-                                {{{ description }}}
+                                {{{this.title }}}
+                                {{{this.image }}}
+                                {{{this.subtitle }}}
+                                {{{this.description }}}
                             </div>
                         </div>
                     </div>

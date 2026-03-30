@@ -16,18 +16,10 @@ const tripsList = async(req, res) => {
 
 	if(!q)
 	{ // Data base returned no Data
-		return res
-			.status(404)
-			.json(err);
+		return res.status(404).json(err);
 	} else { // return resulting trip lists
-		return res
-			.status(200)
-			.json(q);
+		return res.status(200).json(q);
 	}
-};
-
-module.exports = {
-	tripsList
 };
 
 // GET: /trips/:tripCode - lists a single trip
@@ -35,7 +27,7 @@ module.exports = {
 // and JSON message to the requesting client
 const tripsFindByCode = async(req, res) => {
 	const q = await Model
-		.find({'code' : req.params.tripCode}) // return a single record
+		.findOne({'code' : req.params.tripCode}) // return a single record
 		.exec();
 
 		// Uncomment the following line to show result of querey
@@ -44,13 +36,9 @@ const tripsFindByCode = async(req, res) => {
 
 	if(!q)
 	{ // Data base returned no Data
-		return res
-			.status(404)
-			.json(err);
+		return res.status(404).json(err);
 	} else { // return resulting trip lists
-		return res
-			.status(200)
-			.json(q);
+		return res.status(200).json(q);
 	}
 };
 

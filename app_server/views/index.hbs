@@ -13,21 +13,21 @@
             <div id="contents">
                 <div id="adbox">
                     <img src="images/sea-sound.jpg" alt="Img">
-                    {{{ title }}}
-                    {{{ description }}}
+                    {{{this.title }}}
+                    {{{this.description }}}
                 </div>
                 <div id="main">
                     <div class="box">
                         <div>
                             <div>
-                                {{{ subtitle }}} 
+                                {{{this.subtitle }}} 
                                 <div class="blogs">
                                     {{#each blogs }}
                                     <ul>
                                         <li>
-                                            {{{ this.title }}}
-                                            {{{ this.date }}}
-                                            {{{ this.description }}}
+                                            {{{this.title }}}
+                                            {{{this.date }}}
+                                            {{{this.description }}}
                                         </li>
                                     </ul>
                                     {{/each}}
@@ -39,8 +39,8 @@
                         <div>
                             <div>
                                 {{#each testimonials}}
-                                    {{{ this.title }}}
-                                    {{{ this.description }}}
+                                    {{{this.title }}}
+                                    {{{this.description }}}
                                 {{/each}}
                             </div>
                         </div>

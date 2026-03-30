@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Foods - Travlr Getaways Website Template</title>
+    <title>Rooms - Travlr Getaways Website Template</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -14,19 +14,16 @@
                 <div class="box">
                     <div>
                         <div class="body">
-                            {{{this.title }}} 
-                            <ul id="foods">
+                            {{{this.title }}}
+                            <ul id="rooms">
+                                {{#each rooms }}
                                 <li>
-                                    {{#each foods }}
-                                        {{{this.subtitle }}}
-                                    <div class="infos">
-                                            {{{this.image }}}
-                                            {{{this.description }}} 
-                                    </div>
-                                    <br />
-                                    <hr />
-                                    {{/each}}
+                                    {{{this.image }}}
+                                    {{{this.subtitle }}}
+                                    {{{this.description }}}
+                                    {{{this.rate }}}
                                 </li>
+                                {{/each}}
                             </ul>
                         </div>
                     </div>

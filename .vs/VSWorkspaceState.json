@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\app_admin",
+    "\\app_admin\\src",
+    "\\app_admin\\src\\app",
+    "\\app_admin\\src\\app\\edit-trip",
     "\\app_api",
+    "\\app_api\\controllers",
     "\\app_api\\models",
-    "\\app_server",
     "\\app_server\\controllers",
-    "\\app_server\\routes",
-    "\\app_server\\views",
-    "\\app_server\\views\\partials",
-    "\\data",
-    "\\public"
+    "\\app_server\\routes"
   ],
-  "SelectedNode": "\\app_server\\controllers\\travel.js",
+  "SelectedNode": "\\app_admin\\src\\app\\edit-trip\\edit-trip.ts",
   "PreviewInSolutionExplorer": false
 }

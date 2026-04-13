@@ -4,13 +4,13 @@
     "\\app_admin",
     "\\app_admin\\src",
     "\\app_admin\\src\\app",
+    "\\app_admin\\src\\app\\add-trip",
     "\\app_admin\\src\\app\\edit-trip",
-    "\\app_api",
-    "\\app_api\\controllers",
-    "\\app_api\\models",
-    "\\app_server\\controllers",
-    "\\app_server\\routes"
+    "\\app_admin\\src\\app\\services",
+    "\\app_admin\\src\\app\\trip-card",
+    "\\app_admin\\src\\app\\trip-listing",
+    "\\app_admin\\src\\app\\utils"
   ],
-  "SelectedNode": "\\app_admin\\src\\app\\edit-trip\\edit-trip.ts",
+  "SelectedNode": "\\app_admin\\src\\app\\app.config.ts",
   "PreviewInSolutionExplorer": false
 }

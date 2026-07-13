@@ -15,7 +15,7 @@ const tripsList = async(req, res) => {
 		// console.log(q);
 
 	if(!q)
-	{ // Data base returned no Data
+	{ // Data base returned no Datax
 		return res.status(404).json(err);
 	} else { // return resulting trip lists
 		return res.status(200).json(q);

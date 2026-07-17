@@ -3,42 +3,88 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-	email: {
+	username: {
 		type: String,
 		unique: true,
-		required: true
+		required: true,
+		trim: true,
+		minlength: [3, 'Username must be at least 3 characters long'],
 	},
-	name: {
+	email: {
 		type: String,
-		required: true
+		required: true,
+		unique: true,
+		trim: true,
+		lowercase: true,
+		match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
 	},
-	hash: String, 
-	salt: String,
+	password: {
+		type: String,
+		required: true,
+		minlength: [6, 'Password must be at least 6 characters long'],
+		select: false // do not return password field by default
+	},
+	salt: {
+		type: String,
+		select: false
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now
+	}
 });
 
-// method to set the password for the users
-userSchema.methods.setPassword = function(password) {
-	this.salt = crypto.randomBytes(16).toString('hex');
-	this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-};
+// Pre-save: Hash password before saving to database
+userSchema.pre('save', async function() {
+	const user = this;
 
-// method to verify that the password submitted was the same as the one stored in the user record
+	// only hash if password is new or modified
+	if (!user.isModified('password')) return;
+	
+	try {
+		// Generate salt and hash password
+		const salt = crypto.randomBytes(16).toString('hex');
+		const hash = crypto.pbkdf2Sync(user.password, salt, 100000, 64, 'sha512').toString('hex');
+
+		user.salt = salt;
+		user.password = hash;
+	} catch (error) {
+		throw error;
+	}
+});
+
+// Method to validate password
 userSchema.methods.validPassword = function(password) {
-	var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-	return this.hash === hash;
+	// If you're using crypto or similar
+	// This compares plaintext password against hashed password
+	try {
+		const hash = crypto.pbkdf2Sync(password, this.salt, 100000, 64, 'sha512').toString('hex');
+
+		return crypto.timingSafeEqual(
+			Buffer.from(this.password),
+			Buffer.from(hash)
+		);
+	} catch (error) {
+		return false;
+	}
 };
 
-// method to return a JSON Web Token for the specific user record
+/**
+* Generate JWT token
+* called after a successful login
+* Complexity 0(1)
+*/
 userSchema.methods.generateJWT = function() {
-	return jwt.sign(
+	const token = jwt.sign(
 		{
-			// paylod for our JSON Web Token
 			_id: this._id,
-			email: this.email,
-			name: this.name,
+			username: this.username,
+			email: this.email
 		},
-		process.env.JWT_SECRET, // SECRET stored in .env file
-		{ expiresIn: '1h' }); // Token expires an hour from creation
+		process.env.JWT_SECRET,
+		{ expiresIn: '24h' }
+	);
+	return token;
 };
 
 const User = mongoose.model('users',userSchema);

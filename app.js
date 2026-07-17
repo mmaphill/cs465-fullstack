@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// import middleware
+const errorMiddleware = require('./app_api/middleware/errorMiddleware');
+
 // define routers
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
@@ -32,6 +35,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
+app.set('view engine', 'hbs');
 
 // register handlebars helper (https://www.npmjs.com/package/hbs)
 handlebars.registerHelper('eq', (a, b) => a === b);
@@ -39,13 +43,15 @@ handlebars.registerHelper('eq', (a, b) => a === b);
 // register handlbars partials (https://www.npmjs.com/package/hbs)
 handlebars.registerPartials(__dirname + '/app_server/views/partials');
 
-app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// This serves the built Angular app from the dist folder
+app.use('/admin', express.static(path.join(__dirname, 'app_admin/dist/app_admin')));
+// passport authentication
 app.use(passport.initialize());
 
 // Enable CORS
@@ -70,29 +76,15 @@ app.use('/news', newsRouter);
 app.use('/rooms', roomsRouter);
 app.use('/api', apiRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// API routes (with error handling)
+app.use('/api', apiRouter);
+
+// Catch any requests that don't match a routers
+app.use((req, res, next) => {
+	next(createError(404, 'Route not found'));
 });
 
-// catch unauthorized error and create 401
-app.use((err, req, res, next) => {
-	if (err.name === 'unauthorizedError') {
-		res.
-			status(401)
-			.json({"message": err.name + ": " + err.message});
-	}
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+// catches all errors from routes and asyncHandler
+app.use(errorMiddleware);
 
 module.exports = app;

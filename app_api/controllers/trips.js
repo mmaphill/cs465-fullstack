@@ -1,52 +1,51 @@
 const mongoose = require('mongoose');
-const Trip = require('../models/travlr'); // register the model
-const Model = mongoose.model('trips');
+const { handleError, handleSuccess } = require('../services/errorHandler');
+const asyncHandler = require('../middleware/asyncHandler');
+const Model = require('../models/travlr');
 
-// GET: /trips - lists all the trips
-// Regardless of outcome, response must include HTML status code
-// and JSON message to the requesting client
-const tripsList = async(req, res) => {
-	const q = await Model
-		.find({}) // no filter, return all records
-		.exec();
+/**
+* Controller for handling trip-related operations.
+* Each function corresponds to a specific API endpoint and handles
+* the request and response logic for that endpoint.
+* @async
+* @function tripsList
+* @param {Object} req - Express request Object
+* @param {Object} res - Express response Object
+* @returns {Object} JSON response with trips array or error message
+* @throw {Error} Database connection errors
+* @example
+* GET /api/trips
+* Response: { success: true, data: [...] }
+*/
+const tripsList = asyncHandler(async(req, res) => {
+	const q = await Model.find({}).exec();
 
-		// Uncomment the following line to show result of querey
-		// on the console
-		// console.log(q);
-
-	if(!q)
-	{ // Data base returned no Datax
-		return res.status(404).json(err);
-	} else { // return resulting trip lists
-		return res.status(200).json(q);
+	if (!q || q.length === 0) {
+		return handleError(res, 404, 'No trips found');
 	}
-};
+
+	return handleSuccess(res, 200, q);
+			
+});
 
 // GET: /trips/:tripCode - lists a single trip
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
-const tripsFindByCode = async(req, res) => {
-	const q = await Model
-		.findOne({'code' : req.params.tripCode}) // return a single record
-		.exec();
+const tripsFindByCode = asyncHandler(async(req, res) => {
+	const trip = await Model.findOne({ code: req.params.tripCode }).exec();
 
-		// Uncomment the following line to show result of querey
-		// on the console
-		// console.log(q);
-
-	if(!q)
-	{ // Data base returned no Data
-		return res.status(404).json(err);
-	} else { // return resulting trip lists
-		return res.status(200).json(q);
+	if (!trip) {
+		return handleError(res, 404, 'Trip with code ${req.params.tripCode} not found');
 	}
-};
+	
+	return handleSuccess(res, 200, trip);
+});
 
 // POST: /trips - adds a new trip
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
-const tripsAddTrip = async(req, res) => {
-	const newTrip = new Trip({
+const tripsAddTrip = asyncHandler(async(req, res) => {
+	const newTrip = new Model({
 		code: req.body.code,
 		name: req.body.name,
 		length: req.body.length,
@@ -57,28 +56,19 @@ const tripsAddTrip = async(req, res) => {
 		description: req.body.description
 	});
 
-	const q = await newTrip.save();
-
-	if (!q)
-	{ // Database returned no Data
-		return res.status(400).json(err);
-	} else {
-		return res.status(201).json(q);
-	}
+	const savedTrip = await newTrip.save();
+	return handleSuccess(res, 201, savedTrip);
 
 	// Uncomment the following line to show result of operation
 	// on the console
 	// console.log(q);
-};
+});
 
 // PUT: /trips/:tripCode - updates an existing trip
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client 
-const tripsUpdateTrip = async(req, res) => {
-	console.log(req.params);
-	console.log(req.body);
-
-	const q = await Model
+const tripsUpdateTrip = asyncHandler(async(req, res) => {
+	const updatedTrip = await Model
 		.findOneAndUpdate(
 			{ 'code' : req.params.tripCode}, // find record to update
 			{
@@ -90,26 +80,35 @@ const tripsUpdateTrip = async(req, res) => {
 				perPerson: req.body.perPerson,
 				image: req.body.image,
 				description: req.body.description
-			}
-		)
-		.exec();
+			},
+			{ new: true, runValidators: true }
+		).exec();
 
-		if(!q)
-		{ // database returned no Data
-			return res.status(400).json(err);
-		} else { // return resulting updated trip
-			return res.status(200).json(q);
+		if(!updatedTrip) { 
+			return handleError(res, 404, 'Trip with code ${req.params.tripCode} not found');
 		}
+
+		return handleSuccess(res, 200, updatedTrip);
 
 		// Uncomment the following line to show result of operation
 		// on the console
 		// console.log(q);
-};
-	
+});
+
+const tripsDeleteTrip = asyncHandler(async (req, res) => {
+	const deletedTrip = await Model.findOneAndDelete({ code: req.params.tripCode }).exec();
+
+	if (!deletedTrip) {
+		handleError(res, 404, 'Trip with code ${req.params.tripCode} not found');
+	}
+
+	return handleSuccess(res, 200, { message: 'Trip ${deletedTrip} successfully deleted' });
+});
 
 module.exports = {
 	tripsList,
 	tripsFindByCode,
 	tripsAddTrip,
-	tripsUpdateTrip
+	tripsUpdateTrip,
+	tripsDeleteTrip
 };

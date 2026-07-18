@@ -1,8 +1,9 @@
 export class AuthResponse {
-  token: string;
-
-  constructor()
-  {
-    this.token = '';
-  }
+  message?: string;
+  token?: string;
+  user?: {
+    id?: string;
+    username?:string;
+    email?: string;
+  };
 }

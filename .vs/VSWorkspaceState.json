@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\app_admin\\.angular\\cache",
-    "\\app_api",
-    "\\app_api\\controllers",
-    "\\app_api\\models",
-    "\\app_api\\routes",
-    "\\app_server",
-    "\\app_server\\controllers",
-    "\\app_server\\routes",
-    "\\data"
+    "\\app_admin",
+    "\\app_admin\\src",
+    "\\app_admin\\src\\app",
+    "\\app_admin\\src\\app\\models",
+    "\\app_admin\\src\\app\\navbar",
+    "\\app_admin\\src\\app\\services",
+    "\\app_admin\\src\\app\\trip-card",
+    "\\app_admin\\src\\app\\trip-listing",
+    "\\app_admin\\src\\app\\utils"
   ],
-  "SelectedNode": "\\app_server\\controllers\\travel.js",
+  "SelectedNode": "\\app_admin\\src\\app\\models\\auth-response.ts",
   "PreviewInSolutionExplorer": false
 }

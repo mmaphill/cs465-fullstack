@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication';
 import { User } from '../models/user';
+import { AuthResponse } from '../models/auth-response';
 
 @Component({
   selector: 'app-login',
@@ -12,58 +13,77 @@ import { User } from '../models/user';
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-
 export class LoginComponent implements OnInit {
-
   public formError: string = '';
-  submitted = false;
+  public isLoading: boolean = false;
+  submitted: boolean = false;
 
   credentials = {
     name: '',
     email: '',
     password: ''
-  }
+  };
 
-  constructor (
+  constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
- }
-
-  public onLoginSubmit(): void {
-    this.formError = '';
-    if(!this.credentials.email || !this.credentials.password || !this.credentials.name) {
-      this.formError = 'All fields are required, please try again';
-      this.router.navigateByUrl('#'); // return to login page
-    } else {
-      this.doLogin();
+    // Redirect if already logged in
+    if (this.authenticationService.isLoggedIn()) {
+      this.router.navigate(['']);
     }
   }
 
+  public onLoginSubmit(): void {
+    console.log('🔵 LoginComponent: Form submitted');
+    
+    this.formError = '';
+    this.submitted = true;
+
+    if (!this.credentials.email || !this.credentials.password || !this.credentials.name) {
+      this.formError = 'All fields are required, please try again';
+      return;
+    }
+
+    this.doLogin();
+  }
+
   public doLogin(): void {
-    let newUser = {
+    console.log('🔵 LoginComponent: Starting login');
+    
+    this.isLoading = true;
+    this.formError = '';
+    
+    const newUser: User = {
       name: this.credentials.name,
       email: this.credentials.email,
-    } as User;
+    };
 
-    // console.log('LoginComponent::doLogin')
-    // console.log('this.credentials);
-    this.authenticationService.login(newUser,
-      this.credentials.password);
+    // Subscribe to the login Observable
+    this.authenticationService.login(newUser, this.credentials.password).subscribe({
+      next: (response: AuthResponse) => {
+        console.log('✅ LoginComponent: Login successful', response);
+        this.isLoading = false;
 
-    if(this.authenticationService.isLoggedIn())
-    {
-      // consol.log('Router::Direct');
-      this.router.navigate(['']);
-    } else {
-      var timer = setTimeout(() => {
-        if(this.authenticationService.isLoggedIn())
-        {
-          // console.log('Router::Pause');
-          this.router.navigate(['']);
-        }},3000);
-    }
+        // Token is now saved by AuthenticationService
+        // Navigate to dashboard
+        this.router.navigate(['dashboard']);
+      },
+      error: (error: any) => {
+        console.error('❌ LoginComponent: Login failed', error);
+        this.isLoading = false;
+        
+        // Extract error message from API response
+        if (error.error && error.error.message) {
+          this.formError = error.error.message;
+        } else if (error.message) {
+          this.formError = error.message;
+        } else {
+          this.formError = 'Login failed. Please check your credentials and try again.';
+        }
+      }
+    });
   }
 }

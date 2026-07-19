@@ -1,0 +1,60 @@
+<div class="register-container">
+  <h1>Register for Travlr Admin</h1>
+
+  <form (ngSubmit)="onRegisterSubmit()">
+    <div *ngIf="formError" class="alert alert-danger">
+      {{ formError }}
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text"
+             id="name"
+             [(ngModel)]="credentials.name"
+             name="name"
+             [disabled]="isLoading"
+             required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email"
+             id="email"
+             [(ngModel)]="credentials.email"
+             name="email"
+             [disabled]="isLoading"
+             required />
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password"
+             id="password"
+             [(ngModel)]="credentials.password"
+             name="password"
+             [disabled]="isLoading"
+             required />
+    </div>
+
+    <div class="form-group">
+      <label for="passwordConfirm">Confirm Password:</label>
+      <input type="password"
+             id="passwordConfirm"
+             [(ngModel)]="credentials.passwordConfirm"
+             name="passwordConfirm"
+             [disabled]="isLoading"
+             required />
+    </div>
+
+    <button type="submit"
+            [disabled]="isLoading"
+            class="btn btn-primary">
+      {{ isLoading ? 'Registering...' : 'Register' }}
+    </button>
+  </form>
+
+  <p class="login-link">
+    Already have an account?
+    <a routerLink="/login">Login here</a>
+  </p>
+</div>

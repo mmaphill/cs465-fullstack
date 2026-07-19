@@ -50,7 +50,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // This serves the built Angular app from the dist folder
-app.use('/admin', express.static(path.join(__dirname, 'app_admin/dist/app_admin')));
+app.use('/admin', express.static(path.join(__dirname, 'app_admin/dist/travlr-admin/browser')));
 // passport authentication
 app.use(passport.initialize());
 

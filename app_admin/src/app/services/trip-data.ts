@@ -76,40 +76,7 @@ export class TripDataService {
     };
 
     return this.http.post<ApiResponse<AuthResponse>>(this.baseUrl + '/' + endpoint, formData).pipe(
-      map(response => {
-        // extract the response data
-        const authResponse = response.data;
-
-        // store token in localStorage if present
-        if (authResponse.token) {
-          this.storage.setItem('token', authResponse.token);
-        }
-
-        return authResponse;
-      })
+      map(response => response.data)
     );
   }
-
-  /**
-   * Get stored JWT token from localStorage
-   */
-  getToken(): string | null {
-    return this.storage.getItem('token');
-  }
-
-  /**
-   * Check if user is logged in
-   */
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
-  /**
-   * Logout - remove token from storage
-   */
-  logout(): void {
-    this.storage.removeItem('token');
-  }
-
 }
-

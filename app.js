@@ -4,7 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// bring in the database
+require('./app_api/models/db');
+
 // import middleware
+const session = require('express-session');
 const errorMiddleware = require('./app_api/middleware/errorMiddleware');
 
 // define routers
@@ -16,13 +20,12 @@ var contactRouter = require('./app_server/routes/contact');
 var mealsRouter = require('./app_server/routes/meals');
 var newsRouter = require('./app_server/routes/news');
 var roomsRouter = require('./app_server/routes/rooms');
+var authRouter = require('./app_server/routes/auth');
+var profileRouter = require('./app_server/routes/profile');
 var apiRouter = require('./app_api/routes/index');
 
 // define handlebars 
 var handlebars = require('hbs');
-
-// bring in the database
-require('./app_api/models/db');
 
 // bring in the authentication logic
 require('dotenv').config();
@@ -51,6 +54,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // This serves the built Angular app from the dist folder
 app.use('/admin', express.static(path.join(__dirname, 'app_admin/dist/travlr-admin/browser')));
+
+// session information
+app.use(session({
+	secret: process.env.SESSION_SECRET || 'travlr-secret-key-change-in-production',
+	resave: false,
+	saveUnitialized: false,
+	cookie: {
+		secure: false,
+		maxAge: 1000 * 60 * 60 * 24 // 24 hours
+	}
+}));
+
 // passport authentication
 app.use(passport.initialize());
 
@@ -65,6 +80,12 @@ app.use('/api', (req, res, next) => {
 	next();
 });
 
+app.use('/rooms', roomsRouter);
+app.use('/auth', authRouter);
+
+app.get('/login', (req, res) => { res.render('Login', { title: 'Login'}); });
+app.get('/register', (req, res) => { res.render('Register', { title: 'Register' }); });
+
 // wire-up routes to controllers
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
@@ -73,8 +94,7 @@ app.use('/travel', travelRouter);
 app.use('/contact', contactRouter);
 app.use('/meals', mealsRouter);
 app.use('/news', newsRouter);
-app.use('/rooms', roomsRouter);
-app.use('/api', apiRouter);
+app.use('/profile', profileRouter);
 
 // API routes (with error handling)
 app.use('/api', apiRouter);

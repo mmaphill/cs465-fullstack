@@ -5,6 +5,7 @@ const router = express.Router(); // Router logic
 // This is where we import the controllers we will router
 const tripsController = require('../controllers/trips');
 const authController = require('../controllers/authentication');
+const userProfileController = require('../controllers/userProfile');
 
 // import error handler and async handler
 const { handleError } = require('../services/errorHandler');
@@ -55,6 +56,11 @@ function authenticateJWT(req, res, next) {
 // authentication routes
 router.route("/register").post(authController.register);
 router.route("/login").post(authController.login);
+
+// protected routes - requires authentication
+router.get('/profile', authenticateJWT, userProfileController.getUserProfile);
+router.put('/profile', authenticateJWT, userProfileController.updateUserProfile);
+router.post('/profile', authenticateJWT, userProfileController.createUserProfile);
 
 // defin route for our trips endpoint
 /**

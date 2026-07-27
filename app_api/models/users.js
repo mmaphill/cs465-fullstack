@@ -28,6 +28,15 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		select: false
 	},
+	// added the User Profile/Preferences
+	profile: {
+		firstName: String,
+		lastName: String,
+		// avatar to be added later
+		bio: String,
+		theme: { type: String, enum: ['light', 'dark'], default: 'light' },
+		notifications: { type: Boolean, default: true }
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now
@@ -87,5 +96,4 @@ userSchema.methods.generateJWT = function() {
 	return token;
 };
 
-const User = mongoose.model('users',userSchema);
-module.exports = User;   
+module.exports = mongoose.model('User', userSchema);

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Travlr Getaways</title>
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+    <div id="background">
+        <div id="page">
+            {{> header }}
+            <div id="contents">
+                <div class="box">
+                    <div>
+                        <div class="body">
+                            <h1>Create Account</h1>
+                            <form method="POST" action="/auth/register" style="max-width: 400px; margin: 0 auto;">
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <label for="username" style="display: block; margin-bottom: 5px;">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required style="width: 100%; padding: 8px;">
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <label for="email" style="display: block; margin-bottom: 5px;">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required style="width: 100%; padding: 8px;">
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <label for="password" style="display: block; margin-bottom: 5px;">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required style="width: 100%; padding: 8px;">
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 15px;">
+                                    <label for="passwordConfirm" style="display: block; margin-bottom: 5px;">Confirm Password</label>
+                                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" required style="width: 100%; padding: 8px;">
+                                </div>
+
+                                <button type="submit" style="padding: 10px 20px; background-color: #333; color: white; border: none; cursor: pointer; width: 100%;">Register</button>
+                            </form>
+
+                            <div style="text-align: center; margin-top: 20px;">
+                                <p>Already have an account? <a href="/login">Login here</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> footer }}
+    </div>
+</body>
+</html>

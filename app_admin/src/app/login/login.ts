@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
 
   credentials = {
-    name: '',
     email: '',
     password: ''
   };

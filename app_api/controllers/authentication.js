@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../models/users');
 const passport = require('passport');
+const UserProfile = require('../models/userProfile');
 
 // User Registration
 // Complexity: 0(n)
@@ -24,6 +25,10 @@ const register = asyncHandler(async (req, res) => {
 	});
 
 	const savedUser = await user.save(); 
+
+	// create profile for new User
+	const profile = new UserProfile({ userId: savedUser._id });
+	await profile.save();
 
 	return handleSuccess(res, 201, {
 		message: 'User registered successfully',

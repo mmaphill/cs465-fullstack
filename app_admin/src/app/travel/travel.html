@@ -1,0 +1,23 @@
+<div class="search-container">
+  <input
+         type="text"
+         [(ngModel)]="searchQuery"
+         (keyup)="search(searchQuery)"
+         placeholder="Search trips by name, resort, or code..."
+         class="search-input"
+         />
+  <button *ngIf="searchQuery" (click)="clearSearch()" class="clear-search-btn">Clear</button>
+  <div *ngIf="isSearching" class="loading">Searching...</div>
+</div>
+
+<div class="trips-container">
+  <div *ngIf="trips.length === 0" class="no-results">
+    No trips found. Please try a different search query.
+  </div>
+
+  <div *ngFor="let trip of trips" class="trip-card">
+    <h3>{{ trip.name }}</h3>
+    <p>Resort: {{ trip.resort }}</p>
+    <p>Code: {{ trip.code }}</p>
+  </div>
+</div>

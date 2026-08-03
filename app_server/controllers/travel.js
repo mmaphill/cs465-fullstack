@@ -33,7 +33,7 @@ const travel = async function (req, res, next) {
 			title: 'Travlr Getaways', 
 			trips: trips, 
 			message: message, 
-			currentPage: 'travel' 
+			currentPage: 'travel',
 		});
 	} catch (err) {
 		console.error('Travel Controller: Error fetching trips:', err.message);
@@ -71,7 +71,7 @@ const travelDetail = async function (req, res, next) {
 			title: 'Trip Details', 
 			trips: trips, 
 			message: message, 
-			currentPage: 'travel' 
+			currentPage: 'travel',
 		});
 	} catch (err) {
 		console.error('Travel Detail Controller: Error fetching trips:', err.message);

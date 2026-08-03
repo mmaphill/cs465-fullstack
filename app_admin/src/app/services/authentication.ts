@@ -63,8 +63,8 @@ export class AuthenticationService {
    */
   public getCurrentUser(): User {
     const token: string = this.getToken();
-    const { email, name } = JSON.parse(atob(token.split('.')[1]));
-    return { email, name } as User;
+    const { email, username } = JSON.parse(atob(token.split('.')[1]));
+    return { email, username } as User;
   }
 
   /**

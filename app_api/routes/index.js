@@ -6,6 +6,7 @@ const router = express.Router(); // Router logic
 const tripsController = require('../controllers/trips');
 const authController = require('../controllers/authentication');
 const userProfileController = require('../controllers/userProfile');
+const tripSearchController = require('../controllers/tripSearch');
 
 // import error handler and async handler
 const { handleError } = require('../services/errorHandler');
@@ -54,8 +55,8 @@ function authenticateJWT(req, res, next) {
 };
 
 // authentication routes
-router.route("/register").post(authController.register);
-router.route("/login").post(authController.login);
+router.route("/auth/register").post(authController.register);
+router.route("/auth/login").post(authController.login);
 
 // protected routes - requires authentication
 router.get('/profile', authenticateJWT, userProfileController.getUserProfile);
@@ -73,6 +74,14 @@ router
 	.route('/trips')
 	.get(tripsController.tripsList) // GET method routes tripList
 	.post(authenticateJWT, tripsController.tripsAddTrip);
+
+// SEARCH ROUTES FIRST (specific)
+router.get('/trips/search/stats', tripSearchController.getSearchStats);
+router.get('/trips/search', tripSearchController.searchTrips);
+
+// RECOMMENDATION ROUTES
+router.get('/trips/recommendations', tripSearchController.getRecommendations);
+router.get('/trips/:tripCode/similar', tripSearchController.getSimilarTrips);
 
 /**
 * GET /api/trips/:tripCode - Get a specific trip by code

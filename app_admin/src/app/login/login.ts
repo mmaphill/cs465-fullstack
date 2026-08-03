@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../services/authentication';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
@@ -9,7 +10,7 @@ import { AuthResponse } from '../models/auth-response';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   public isLoading: boolean = false;
   submitted: boolean = false;
 
-  credentials = {
+  credentials: {username: string; email: string; password:string; } = {
+    username: '',
     email: '',
     password: ''
   };
@@ -41,7 +43,7 @@ export class LoginComponent implements OnInit {
     this.formError = '';
     this.submitted = true;
 
-    if (!this.credentials.email || !this.credentials.password || !this.credentials.name) {
+    if (!this.credentials.email || !this.credentials.password || !this.credentials.username) {
       this.formError = 'All fields are required, please try again';
       return;
     }
@@ -56,8 +58,9 @@ export class LoginComponent implements OnInit {
     this.formError = '';
     
     const newUser: User = {
-      name: this.credentials.name,
+      username: this.credentials.username,
       email: this.credentials.email,
+      password: this.credentials.password
     };
 
     // Subscribe to the login Observable

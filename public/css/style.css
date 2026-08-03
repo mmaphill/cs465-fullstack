@@ -33,6 +33,11 @@ img {
 	margin-bottom: 20px;
 	padding-top: 20px;
 }
+#header::after {
+	content: "";
+	display: table;
+	clear: both;
+}
 /** Logo **/
 #logo {
 	float: left;
@@ -542,4 +547,45 @@ hr {
 }
 #connect a.googleplus:hover {
 	background-position: 0 -197px;
+}
+/*--------------------------- Login/Logout/Register ---------------------------*/
+#auth-button {
+	float: right;
+	margin-top: 20px;
+	margin-right: 49px;
+}
+
+.user-welcome {
+  color: #1a5fa0;
+}
+
+.auth-btn, .logout-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.auth-btn {
+    background-color: #0096d6;
+    color: white;
+    border: 1px solid #0096d6;
+}
+
+.auth-btn:hover {
+    background-color: #0078a8;
+    border-color: #0078a8;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+    border-color: #c82333;
 }

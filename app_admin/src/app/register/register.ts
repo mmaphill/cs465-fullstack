@@ -60,8 +60,9 @@ export class RegisterComponent implements OnInit {
     this.formError = '';
     
     const newUser: User = {
-      name: this.credentials.name,
+      username: this.credentials.name,
       email: this.credentials.email,
+      password: this.credentials.password
     };
 
     this.authenticationService.register(newUser, this.credentials.password).subscribe({

@@ -90,7 +90,7 @@ const logout = (req, res) => {
 		if (err) {
 			return res.status(500).send('Coud not log out');
 		}
-		res.redirect('/');
+		res.redirect('/index');
 	});
 };
 

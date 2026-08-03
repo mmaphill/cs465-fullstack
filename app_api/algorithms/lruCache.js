@@ -1,6 +1,6 @@
 /** 
 * LRU (Least Recently Used) Cache using linked list + HashMap
-* Get: 0(1), PUt: 0(1), Eviction: 0(1)
+* Get: O(1), PUt: O(1), Eviction: O(1)
 * Use case: Cache top 10 frequently accessed trips
 * Resource: https://dev.to/abdullahyasir/understanding-lru-cache-efficient-data-storage-and-retrieval-2jnc
 */
@@ -48,19 +48,16 @@ class LRUCache {
 		this.head.next.prev = node;
 		this.head.next = node;
 	}
+
+	// Get cache size
+	size() { return this.cache.size; }
+
+	// Clear cache
+	clear() { 
+		this.cache.clear();
+		this.head.next = this.tail;
+		this.tail.prev = this.head;
+	}
 }
 
-// Usage in Controller
-const tripCache = new LRUCache (1000);
-
-const gettripByCode = async (req, res) => {
-	const code = req.params.tripCode;
-	
-	let trip = tripCacche.get(code);
-
-	if (!trip) {
-		trip.await Model.findOne({ code }).exec();
-		if (trip) tripCache.put(code, trip);
-	}
-	return handleSuccess(res, 200, trip);
-};
+module.exports = LRUCache;

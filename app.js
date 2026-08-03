@@ -59,7 +59,7 @@ app.use('/admin', express.static(path.join(__dirname, 'app_admin/dist/travlr-adm
 app.use(session({
 	secret: process.env.SESSION_SECRET || 'travlr-secret-key-change-in-production',
 	resave: false,
-	saveUnitialized: false,
+	saveUninitialized: false,
 	cookie: {
 		secure: false,
 		maxAge: 1000 * 60 * 60 * 24 // 24 hours
@@ -80,11 +80,16 @@ app.use('/api', (req, res, next) => {
 	next();
 });
 
+// pass userId to all templates automatically
+app.use((req, res, next) => {
+	res.locals.userId = req.session.userId;
+	res.locals.username = req.session.username;	
+	next();
+});
+
+
 app.use('/rooms', roomsRouter);
 app.use('/auth', authRouter);
-
-app.get('/login', (req, res) => { res.render('Login', { title: 'Login'}); });
-app.get('/register', (req, res) => { res.render('Register', { title: 'Register' }); });
 
 // wire-up routes to controllers
 app.use('/index', indexRouter);

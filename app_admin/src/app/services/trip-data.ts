@@ -69,7 +69,7 @@ export class TripDataService {
   handleAuthAPICall(endpoint: string, user: User, passwd: string) : Observable<AuthResponse> {
     // console.log('Inside TripDataService::handleAuthAPICall');
     let formData = {
-      username: user.name,
+      username: user.username,
       email: user.email,
       password: passwd,
       passwordConfirm: passwd

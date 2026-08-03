@@ -4,7 +4,7 @@ const profileController = require('../controllers/profile');
 
 // Middleware to check if user is logged in
 const isLoggedIn = (req, res, next) => {
-	if(!req.session.userId) return res.redirect('/login');
+	if(!req.session.userId) return res.redirect('/auth/login');
 	next();
 };
 

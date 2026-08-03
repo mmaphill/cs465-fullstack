@@ -12,8 +12,21 @@ const connect = () => {
 }
 
 // Monitor connection events
-mongoose.connection.on('connected', () => {
+mongoose.connection.on('connected', async () => {
 	console.log(`Mongoose connected to ${dbURI}`);
+	
+	// initialize trip search service when database is connected
+	try {
+		const Trip = require('./travlr');
+		const tripSearchService = require('../services/tripSearchService');
+
+		const trips = await Trip.find({}).exec();
+		console.log(`Building trip search service with ${trips.length} trips`);
+		tripSearchService.buildTriesFromTrips(trips);
+		console.log('Trip search built');
+	} catch (error) {
+		console.error('Failed to build trip search indices:', error);
+	}
 });
 
 mongoose.connection.on('error', err => {

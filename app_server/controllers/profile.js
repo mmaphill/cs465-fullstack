@@ -5,14 +5,27 @@ const User = require('../../app_api/models/users');
 const getProfile = async (req, res, next) => {
 	try {
 		const userId = req.session.userId;
+		console.log('Fetching profile for user:', userId);
+
+		if (!userId) {
+			console.log('No userId in session, redirecting to login');
+			return res.redirect('/auth/login');
+		}
 
 		// Get user profile
-		const profile = await UserProfile.findOne({ userId }).populate('userId');
+		let profile = await UserProfile.findOne({ userId }).populate('userId');
+		console.log('Profile fetched:', profile);
 
-		if (!profile) return res.status(404).render('profile', { message: 'Profile not found' });
+		if (!profile) {
+			console.log('No profile found in database for userId:', userId);
+			profile = new UserProfile({ userId });
+			await profile.save();
+			console.log('Profile created for user:', userId);
+		}
 
 		// Get user data
-		const user = await User.findById(userId);
+		const user = await User.findOne({ _id: userId });
+		console.log('User found:', user.email);
 
 		res.render('profile', {
 			title: 'My Profile',
@@ -49,7 +62,7 @@ const updateProfile = async (req, res, next) => {
 		);
 
 		console.log('Profile updated for user:', req.session.email);
-		res.render('profile', {
+		return res.render('profile', {
 			profile,
 			message: 'Profile updated successfully',
 			currentPage: 'profile'

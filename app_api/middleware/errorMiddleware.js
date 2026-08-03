@@ -16,7 +16,7 @@ const errorMiddleware = (err, req, res, next) => {
 	// Handle duplicate key errors (e.g., unique constraints)
 	if (err.code === 11000) {
 		const field = Object.keys(err.keyPattern)[0];
-		return handleError(res, 400, 'Duplicate: ${field} already exists', err);
+		return handleError(res, 400, `Duplicate: ${field} already exists`, err);
 	}
 
 	// Handle CastError (invalid MongoDB ID)

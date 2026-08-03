@@ -25,7 +25,6 @@ const tripsList = asyncHandler(async(req, res) => {
 	}
 
 	return handleSuccess(res, 200, q);
-			
 });
 
 // GET: /trips/:tripCode - lists a single trip
@@ -35,7 +34,7 @@ const tripsFindByCode = asyncHandler(async(req, res) => {
 	const trip = await Model.findOne({ code: req.params.tripCode }).exec();
 
 	if (!trip) {
-		return handleError(res, 404, 'Trip with code ${req.params.tripCode} not found');
+		return handleError(res, 404, `Trip with code ${req.params.tripCode} not found`);
 	}
 	
 	return handleSuccess(res, 200, trip);
@@ -58,10 +57,6 @@ const tripsAddTrip = asyncHandler(async(req, res) => {
 
 	const savedTrip = await newTrip.save();
 	return handleSuccess(res, 201, savedTrip);
-
-	// Uncomment the following line to show result of operation
-	// on the console
-	// console.log(q);
 });
 
 // PUT: /trips/:tripCode - updates an existing trip
@@ -85,24 +80,20 @@ const tripsUpdateTrip = asyncHandler(async(req, res) => {
 		).exec();
 
 		if(!updatedTrip) { 
-			return handleError(res, 404, 'Trip with code ${req.params.tripCode} not found');
+			return handleError(res, 404, `Trip with code ${req.params.tripCode} not found`);
 		}
 
 		return handleSuccess(res, 200, updatedTrip);
-
-		// Uncomment the following line to show result of operation
-		// on the console
-		// console.log(q);
 });
 
 const tripsDeleteTrip = asyncHandler(async (req, res) => {
 	const deletedTrip = await Model.findOneAndDelete({ code: req.params.tripCode }).exec();
 
 	if (!deletedTrip) {
-		handleError(res, 404, 'Trip with code ${req.params.tripCode} not found');
+		return handleError(res, 404, `Trip with code ${req.params.tripCode} not found`);
 	}
 
-	return handleSuccess(res, 200, { message: 'Trip ${deletedTrip} successfully deleted' });
+	return handleSuccess(res, 200, { message: `Trip ${deletedTrip.tripCode} successfully deleted` });
 });
 
 module.exports = {

@@ -50,6 +50,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// set index for public path
+app.get('/', (req, res) => { res.redirect('/index'); });
 app.use(express.static(path.join(__dirname, 'public')));
 
 // This serves the built Angular app from the dist folder

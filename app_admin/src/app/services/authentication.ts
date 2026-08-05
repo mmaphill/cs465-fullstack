@@ -71,8 +71,8 @@ export class AuthenticationService {
    * Login - returns Observable so component can handle async response
    * Saves token automatically when login succeeds
    */
-  public login(user: User, passwd: string): Observable<AuthResponse> {
-    return this.tripDataService.login(user, passwd).pipe(
+  public login(email: string, passwd: string): Observable<AuthResponse> {
+    return this.tripDataService.login(email, passwd).pipe(
       tap((response: AuthResponse) => {
         console.log('✅ AuthenticationService: Login response received', response);
         if (response && response.token) {

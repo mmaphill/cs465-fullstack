@@ -54,9 +54,13 @@ export class TripDataService {
   }
 
   // call to our /login endpoint, returns JWT
-  login(user: User, passwd: string) : Observable<AuthResponse> {
-    // console.log('Inside TripDataService::login');
-    return this.handleAuthAPICall('login', user, passwd);
+  login(email:string, passwd: string) : Observable<AuthResponse> {
+    const formData = {
+      email: email,
+      password: passwd
+    };
+
+    return this.http.post<ApiResponse<AuthResponse>>(this.baseUrl + '/auth/login', formData).pipe(map(response => response.data));
   }
 
   // call to our /register endpoint, creates user and returns JWT
@@ -75,7 +79,7 @@ export class TripDataService {
       passwordConfirm: passwd
     };
 
-    return this.http.post<ApiResponse<AuthResponse>>(this.baseUrl + '/' + endpoint, formData).pipe(
+    return this.http.post<ApiResponse<AuthResponse>>(this.baseUrl + '/auth/' + endpoint, formData).pipe(
       map(response => response.data)
     );
   }

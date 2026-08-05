@@ -548,7 +548,7 @@ hr {
 #connect a.googleplus:hover {
 	background-position: 0 -197px;
 }
-/*--------------------------- Login/Logout/Register ---------------------------*/
+/*--------------------------- Login/Logout/Register/Profile ---------------------------*/
 #auth-button {
 	float: right;
 	margin-top: 20px;
@@ -588,4 +588,115 @@ hr {
 .logout-btn:hover {
     background-color: #c82333;
     border-color: #c82333;
+}
+
+.profile-link {
+	color: #1a5fa0;
+	text-decoration: none;
+}
+
+.profile-link:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+/*------------------------------------- Travel Dropdown -------------------------------------*/
+#navigation .nav-dropdown {
+	position: relative;
+}
+
+#navigation .dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 49px;
+	left: 15px;
+	width: 200px;
+	background-color: #2c9688;
+	border-radius: 0 0 4px 4px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	z-index: 200;
+}
+
+#navigation .nav-dropdown:hover .dropdown-menu {
+	display: block;
+}
+
+#navigation .dropdown-menu li {
+	float: none;
+	background: none;
+	height: auto;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+#navigation .dropdown-menu li:last-child {
+	border-bottom: none;
+}
+
+#navigation .dropdown-menu li a {
+	color: #fff;
+	display: block;
+	font: bold 13px/1.4 Arial, Helvetica, sans-serif;
+	height: auto;
+	padding: 12px 16px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+#navigation .dropdown-menu li a:hover {
+	background-color: #245e58;
+	color: #e4e1bd;
+}
+/*------------------------------------- Search Box Hover -------------------------------------*/
+#navigation .search-hover {
+	position: relative;
+}
+
+#navigation .search-box {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 220px;
+	background-color: #2c9688;
+	border-radius: 0 4px 4px 4px;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+	padding: 12px;
+	z-index: 300;
+}
+
+#navigation .search-hover:hover .search-box {
+	display:block;
+}
+
+#navigation .search-box form {
+	display: flex;
+	gap: 6px;
+}
+
+#navigation .search-box input {
+	flex: 1;
+	padding: 8px;
+	border: 1px solid #245e58;
+	border-radius: 3px;
+	font: 13px Arial, Helvetica, sas-serif;
+}
+
+#navigation .search-box button {
+	padding: 8px 12px;
+	background-color: #245e58;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	font: bold 13px Arial, Helvetica, sans-serif;
+	cursor: pointer;
+}
+
+#navigation .search-box button:hover {
+	background-color: #1a453f;
 }

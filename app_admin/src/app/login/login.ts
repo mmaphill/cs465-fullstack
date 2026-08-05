@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
 import { AuthenticationService } from '../services/authentication';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
@@ -10,7 +9,7 @@ import { AuthResponse } from '../models/auth-response';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
@@ -19,8 +18,7 @@ export class LoginComponent implements OnInit {
   public isLoading: boolean = false;
   submitted: boolean = false;
 
-  credentials: {username: string; email: string; password:string; } = {
-    username: '',
+  credentials: { email: string; password:string; } = {
     email: '',
     password: ''
   };
@@ -43,7 +41,7 @@ export class LoginComponent implements OnInit {
     this.formError = '';
     this.submitted = true;
 
-    if (!this.credentials.email || !this.credentials.password || !this.credentials.username) {
+    if (!this.credentials.email || !this.credentials.password) {
       this.formError = 'All fields are required, please try again';
       return;
     }
@@ -56,15 +54,9 @@ export class LoginComponent implements OnInit {
     
     this.isLoading = true;
     this.formError = '';
-    
-    const newUser: User = {
-      username: this.credentials.username,
-      email: this.credentials.email,
-      password: this.credentials.password
-    };
 
     // Subscribe to the login Observable
-    this.authenticationService.login(newUser, this.credentials.password).subscribe({
+    this.authenticationService.login(this.credentials.email, this.credentials.password).subscribe({
       next: (response: AuthResponse) => {
         console.log('LoginComponent: Login successful', response);
         this.isLoading = false;

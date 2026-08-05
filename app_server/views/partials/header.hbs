@@ -5,7 +5,7 @@
     <div id="auth-button">
         {{#if userId}}
             <div class="user-welcome">
-                <p>Welcome {{ username }}!</p>
+                <p>Welcome <a href="/profile" title="Update Profile"class="profile-link">{{ username }}!</a></p>
                 <a href="/auth/logout" class="logout-btn">Logout</a>
             </div>
         {{else}}
@@ -18,8 +18,24 @@
             <li class="{{#if (eq currentPage 'index')}} selected{{/if}}">
                 <a href="/index">Home</a>
             </li>
-            <li class="{{#if (eq currentPage 'travel')}} selected{{/if}}">
+            <li class="nav-dropdown {{#if (eq currentPage 'travel')}} selected{{/if}}">
                 <a href="/travel">Travel</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/travel">All Trips</a></li>
+                    <li class="search-hover">
+                        <a href="/travel?search=">Search Trips</a>
+                        <div class="search-box">
+                            <form method="GET" action="/travel">
+                                <input type="text" name="search" placeholder="Search trips..." autocomplete="off" />
+                                <button type="submit">Go</button>
+                            </form>
+                        </div>
+                    </li>
+                    {{#if userId}}
+                        <li><a href="/travel#recommendations">Recommended For You</a></li>
+                    {{/if}}
+                    <li><a href="/travel?sort=top">Top Rated Trips</a></li>
+                </ul>
             </li>
             <li class="{{#if (eq currentPage 'rooms')}} selected{{/if}}">
                 <a href="/rooms">Rooms</a>

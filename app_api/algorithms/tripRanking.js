@@ -101,7 +101,8 @@ const findTopKTrips = (trips, k, scoreFn) => {
 	const minHeap = new MinHeap((a, b) => a.score - b.score);
 
 	for (let i = 0; i < trips.length; i++) {
-		const scoredTrip = {...trips[i], score: scoreFn(trips[i]) };
+		const plainTrip = typeof trips[i].toObject === 'function' ? trips[i].toObject() : trips[i];
+		const scoredTrip = {...plainTrip, score: scoreFn(trips[i]) };
 
 		if (minHeap.size() < k) {
 			minHeap.insert(scoredTrip);
@@ -115,3 +116,5 @@ const findTopKTrips = (trips, k, scoreFn) => {
 	while (minHeap.size() > 0) result.push(minHeap.pop());
 	return result.reverse();
 };
+
+module.exports = { calculateTripScore, rankTrips, findTopKTrips };

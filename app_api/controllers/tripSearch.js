@@ -19,7 +19,7 @@ const searchTrips = asyncHandler(async (req, res) => {
 
 	const results = tripSearchService.searchAll(query);
 
-	return handleSuccess(res, 200, 'Search results', results);
+	return handleSuccess(res, 200, results);
 });
 
 /**
@@ -29,6 +29,10 @@ const searchTrips = asyncHandler(async (req, res) => {
 const getRecommendations = asyncHandler(async (req, res) => {
 	// check for the user
 	if (!req.session.userId) return handleError(res, 401, 'User not logged in');
+	
+	// get UserProfile data
+	const userProfile = await UserProfile.findOne({ userId: req.session.userId });
+	if (!userProfile) return handleError(res, 404, 'User profile not found.');
 
 	const Trip = require('../models/travlr');
 	const allTrips = await Trip.find({}).exec();
@@ -41,7 +45,7 @@ const getRecommendations = asyncHandler(async (req, res) => {
 		5
 	);
 
-	return handleSuccess(res, 200, 'Recommendations', recs);
+	return handleSuccess(res, 200, recs);
 });
 
 /**
@@ -57,7 +61,7 @@ const getSimilarTrips = asyncHandler(async (req, res) => {
 	const allTrips = await Trip.find({}).exec();
 	const similarTrips = recommendations.getSimilarTrips(likedTrip, allTrips, 5);
 
-	return handleSuccess(res, 200, 'Similar trips', similarTrips);
+	return handleSuccess(res, 200, similarTrips);
 });
 
 /**

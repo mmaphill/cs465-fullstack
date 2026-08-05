@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app_admin",
+    "\\app_admin\\src\\app",
+    "\\app_api",
+    "\\app_api\\algorithms",
+    "\\app_api\\controllers",
+    "\\app_server",
+    "\\app_server\\controllers"
+  ],
+  "SelectedNode": "\\app_api\\algorithms\\tripRanking.js",
+  "PreviewInSolutionExplorer": false
+}

@@ -18,7 +18,7 @@ const Model = require('../models/travlr');
 * Response: { success: true, data: [...] }
 */
 const tripsList = asyncHandler(async(req, res) => {
-	const q = await Model.find({}).exec();
+	const q = await Model.find({}).lean().exec();
 
 	if (!q || q.length === 0) {
 		return handleError(res, 404, 'No trips found');
@@ -31,7 +31,7 @@ const tripsList = asyncHandler(async(req, res) => {
 // Regardless of outcome, response must include HTML status code
 // and JSON message to the requesting client
 const tripsFindByCode = asyncHandler(async(req, res) => {
-	const trip = await Model.findOne({ code: req.params.tripCode }).exec();
+	const trip = await Model.findOne({ code: req.params.tripCode }).lean().exec();
 
 	if (!trip) {
 		return handleError(res, 404, `Trip with code ${req.params.tripCode} not found`);

@@ -60,10 +60,6 @@ const tripSchema = new mongoose.Schema({
 
 // Create indexes for frequently queried fields
 tripSchema.index({ code: 1}, { unique: true });
-tripSchema.index({ name: 1});
-tripSchema.index({ resort: 1});
-tripSchema.index({ start: 1});
-tripSchema.index({ perPerson: 1});
 tripSchema.index({ resort: 1, start: 1, perPerson: 1}); // Compund index for filtering
 
 const Trip = mongoose.model('trips', tripSchema);

@@ -35,7 +35,7 @@ const getRecommendations = asyncHandler(async (req, res) => {
 	if (!userProfile) return handleError(res, 404, 'User profile not found.');
 
 	const Trip = require('../models/travlr');
-	const allTrips = await Trip.find({}).exec();
+	const allTrips = await Trip.find({}).lean().exec();
 
 	if (!allTrips || allTrips.length === 0) return handleError(res, 404, 'No trips found in the database');
 
@@ -55,10 +55,10 @@ const getRecommendations = asyncHandler(async (req, res) => {
 const getSimilarTrips = asyncHandler(async (req, res) => {
 	const Trip = require('../models/travlr');
 
-	const likedTrip = await Trip.findOne({ code: req.params.tripCode }).exec();
+	const likedTrip = await Trip.findOne({ code: req.params.tripCode }).lean().exec();
 	if (!likedTrip) return handleError(res, 404, 'Trip not found');
 
-	const allTrips = await Trip.find({}).exec();
+	const allTrips = await Trip.find({}).lean().exec();
 	const similarTrips = recommendations.getSimilarTrips(likedTrip, allTrips, 5);
 
 	return handleSuccess(res, 200, similarTrips);

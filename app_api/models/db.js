@@ -18,6 +18,7 @@ mongoose.connection.on('connected', async () => {
 	// initialize trip search service when database is connected
 	try {
 		const Trip = require('./travlr');
+		await Trip.syncIndexes();
 		const tripSearchService = require('../services/tripSearchService');
 
 		const trips = await Trip.find({}).exec();

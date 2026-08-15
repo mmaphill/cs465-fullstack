@@ -1,3 +1,4 @@
+const PORT = process.env.PORT || 3000;
 const tripsEndpoint = "http://localhost:3000/api/trips";
 const searchEndpoint = "http://localhost:3000/api/trips/search";
 const recommendationsEndpoint = "http://localhost:3000/api/trips/recommendations";

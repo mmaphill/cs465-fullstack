@@ -8,6 +8,7 @@ const readLine = require('readline');
 // timeout is in milliseconds.
 const connect = () => {
 	setTimeout(() => mongoose.connect(dbURI, {
+		family: 4
 	}), 1000);
 }
 

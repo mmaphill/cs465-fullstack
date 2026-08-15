@@ -1,7 +1,7 @@
 const PORT = process.env.PORT || 3000;
-const tripsEndpoint = "http://localhost:3000/api/trips";
-const searchEndpoint = "http://localhost:3000/api/trips/search";
-const recommendationsEndpoint = "http://localhost:3000/api/trips/recommendations";
+const tripsEndpoint = "http://127.0.0.1:${PORT}/api/trips";
+const searchEndpoint = "http://127.0.0.1:${PORT}/api/trips/search";
+const recommendationsEndpoint = "http://127.0.0.1:${PORT}/api/trips/recommendations";
 
 const options = {
 	method: 'GET',

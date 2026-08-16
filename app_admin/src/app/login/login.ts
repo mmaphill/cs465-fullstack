@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '../services/authentication';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
@@ -9,7 +9,7 @@ import { AuthResponse } from '../models/auth-response';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })

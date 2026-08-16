@@ -10,7 +10,7 @@ export class PublicAuthService {
   private isLoggedInSubject!: BehaviorSubject<boolean>;
   public isLoggedIn$!: Observable<boolean>;
 
-  private baseUrl = 'https://localhost:3000';
+  private baseUrl = '';
 
   constructor(private http: HttpClient) {
     this.isLoggedInSubject = new BehaviorSubject<boolean>(this.checkLoginStatus());

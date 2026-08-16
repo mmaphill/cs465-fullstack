@@ -18,8 +18,8 @@ export class TripDataService {
     @Inject (BROWSER_STORAGE) private storage: Storage
   ) {}
 
-  url = 'http://localhost:3000/api/trips';
-  baseUrl = 'http://localhost:3000/api';
+  url = '/api/trips';
+  baseUrl ='/api';
 
   getTrips(): Observable<Trip[]> {
     return this.http.get<ApiResponse<Trip[]>>(this.url).pipe(

@@ -12,7 +12,7 @@ import { ApiResponse } from '../models/api-response';
 export class TripSearchService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl = 'https://localhost:3000/api';
+  private baseUrl = '/api';
 
   searchTrips(query: string): Observable<Trip[]> {
     return this.http.get<ApiResponse<Trip[]>>(`${this.baseUrl}/trips/search`, { params: { query } })
